@@ -16,7 +16,9 @@
 
 class Raven_Client
 {
-    const VERSION = '1.6.1';
+    const PARDIR = DIRECTORY_SEPARATOR;
+
+    const VERSION = '1.7.x-dev';
 
     const PROTOCOL = '6';
 
@@ -168,7 +170,7 @@ class Raven_Client
     private function getDefaultPrefixes()
     {
         $value = get_include_path();
-        return explode(':', $value);
+        return explode(PATH_SEPARATOR, $value);
     }
 
     private function _convertPath($value)
@@ -180,8 +182,8 @@ class Raven_Client
         // we need app_path to have a trailing slash otherwise
         // base path detection becomes complex if the same
         // prefix is matched
-        if (substr($path, 0, 1) === '/' && substr($path, -1, 1) !== '/') {
-            $path = $path . '/';
+        if (substr($path, 0, 1) === self::PARDIR && substr($path, -1, 1) !== self::PARDIR) {
+            $path = $path . self::PARDIR;
         }
         return $path;
     }

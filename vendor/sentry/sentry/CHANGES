@@ -1,7 +1,7 @@
-1.6.1
+1.7.0
 -----
 
-- Correct handling of null in ``user_context``.
+- Corrected some issues with argument serialization in stacktraces.
 
 1.6.0
 -----
