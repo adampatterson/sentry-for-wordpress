@@ -50,7 +50,7 @@ class Bootstrap extends App {
 
 
 	/**
-	 * Handles the sacing of Plugin settings.
+	 * Handles the saving of Plugin settings.
 	 */
 	public function saveOptions() {
 		if ( ! isset( $_POST['sentry_dsn'] ) || ! isset( $_POST['sentry_reporting_level'] ) ) {
