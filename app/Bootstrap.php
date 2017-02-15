@@ -7,7 +7,12 @@ class Bootstrap extends App {
 	private static $instance = null;
 
 	function __construct() {
-		add_action( 'admin_menu', array( $this, 'adminMenu' ) );
+
+		if ( is_multisite() ) {
+			add_action( 'network_admin_menu', array( $this, 'adminMenuNetwork' ) );
+		} else {
+			add_action( 'admin_menu', array( $this, 'adminMenu' ) );
+		}
 
 		if ( is_admin() && $_POST ) {
 			$this->saveOptions();
@@ -23,7 +28,7 @@ class Bootstrap extends App {
 	 */
 	public static function init() {
 		try {
-			$wps = new Bootstrap();
+			$sentryWp = new Bootstrap();
 		} catch ( Exception $e ) {
 
 		}
@@ -33,10 +38,24 @@ class Bootstrap extends App {
 	 * Registeres the Admin Menu.
 	 */
 	public function adminMenu() {
-		add_options_page( 'Sentry Error Reporting Settings', 'Sentry', 'edit_pages', 'sentrysettings', array(
+		$title = 'Sentry Error Reporting Settings';
+
+		add_options_page( $title, 'Sentry', 'edit_pages', 'sentrysettings', array(
 			$this,
 			'adminOptionsPage'
 		) );
+	}
+
+	/**
+	 * Registeres the Admin Menu.
+	 */
+	public function adminMenuNetwork() {
+		$title = 'Sentry Error Reporting Settings';
+		add_submenu_page( 'settings.php', $title, 'Sentry', 'manage_network_options', 'sentrysettings', array(
+			$this,
+			'adminOptionsPage'
+		) );
+
 	}
 
 	/**
@@ -47,7 +66,6 @@ class Bootstrap extends App {
 		$settings     = $this->settings;
 		require_once( dirname( __FILE__ ) . '/views/options.php' );
 	}
-
 
 	/**
 	 * Handles the saving of Plugin settings.
@@ -70,5 +88,3 @@ class Bootstrap extends App {
 		return self::$instance;
 	}
 }
-
-add_action( 'plugins_loaded', array( 'SentryWordPress\Bootstrap', 'init' ) );

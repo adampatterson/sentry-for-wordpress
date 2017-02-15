@@ -12,4 +12,7 @@
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/app/Bootstrap.php';
+add_action( 'plugins_loaded', array( 'SentryWordPress\Bootstrap', 'init' ) );
+
+register_activation_hook( __FILE__, [ 'StrahcomCore\Actions', 'activationHook' ] );
+register_deactivation_hook( __FILE__, [ 'StrahcomCore\Actions', 'deactivationHook' ] );
