@@ -18,5 +18,5 @@ if (!defined('ABSPATH')) {
 require_once __DIR__ . '/vendor/autoload.php';
 add_action( 'plugins_loaded', array( 'SentryWordPress\Bootstrap', 'init' ) );
 
-register_activation_hook( __FILE__, [ 'StrahcomCore\Actions', 'activationHook' ] );
-register_deactivation_hook( __FILE__, [ 'StrahcomCore\Actions', 'deactivationHook' ] );
+register_activation_hook( __FILE__, [ 'SentryWordPress\Actions', 'activationHook' ] );
+register_deactivation_hook( __FILE__, [ 'SentryWordPress\Actions', 'deactivationHook' ] );
